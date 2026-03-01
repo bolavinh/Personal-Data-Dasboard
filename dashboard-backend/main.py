@@ -73,7 +73,21 @@ def master_scheduler_job():
 def start_scheduler():
     scheduler.add_job(master_scheduler_job, 'interval', minutes=1)
     scheduler.start()
-    print("Scheduler đã khởi động thành công!")
+    
+    db = models.SessionLocal()
+    try:
+        # Tự động tạo 4 widget mặc định nếu DB trống
+        if db.query(models.Widget).count() == 0:
+            default_widgets = [
+                models.Widget(name="Dự báo Thời tiết", widget_type="weather", category="System", api_url="frontend_fetch", fetch_interval=0, data_mapping="", layout={"x": 0, "y": 0, "w": 4, "h": 2}),
+                models.Widget(name="Chất lượng Không khí (AQI)", widget_type="aqi", category="System", api_url="frontend_fetch", fetch_interval=0, data_mapping="", layout={"x": 4, "y": 0, "w": 2, "h": 2}),
+                models.Widget(name="Giá Vàng Thế Giới (USD/oz)", widget_type="gold", category="Finance", api_url="https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT", fetch_interval=5, data_mapping="$.price", layout={"x": 6, "y": 0, "w": 2, "h": 2}),
+                models.Widget(name="Tỷ giá USD/VND", widget_type="forex", category="Finance", api_url="https://api.exchangerate-api.com/v4/latest/USD", fetch_interval=60, data_mapping="$.rates.VND", layout={"x": 0, "y": 2, "w": 4, "h": 2})
+            ]
+            db.add_all(default_widgets)
+            db.commit()
+    finally:
+        db.close()
 
 @app.on_event("shutdown")
 def shutdown_scheduler():

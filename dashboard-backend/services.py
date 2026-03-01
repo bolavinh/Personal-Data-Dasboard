@@ -10,9 +10,8 @@ def fetch_and_normalize(widget_id: int, db):
     widget = db.query(models.Widget).filter(models.Widget.id == widget_id).first()
     if not widget:
         return
-    
-    # THÊM ĐOẠN NÀY: Bỏ qua không fetch nếu là Widget Thời tiết tự cung cấp data
-    if widget.category == "Weather":
+
+    if widget.api_url == "frontend_fetch" or widget.category == "System":
         return
 
     try:

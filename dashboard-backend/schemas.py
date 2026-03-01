@@ -10,7 +10,7 @@ class WidgetHistoryResponse(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_mode = True
 
 # Thông tin Widget kèm giá trị mới nhất dùng cho màn hình chính
 class WidgetDashboardResponse(BaseModel):
@@ -22,7 +22,7 @@ class WidgetDashboardResponse(BaseModel):
     last_updated: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        from_mode = True
         
 class TestWidgetRequest(BaseModel):
     api_url: str
@@ -39,7 +39,7 @@ class AlertRuleResponse(AlertRuleCreate):
     last_triggered: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        from_mode = True
         
 class WidgetCreate(BaseModel):
     name: str

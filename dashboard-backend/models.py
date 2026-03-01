@@ -13,6 +13,7 @@ class Widget(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     category = Column(String) # gold, weather, crypto...
+    widget_type = Column(String, default="custom")
     api_url = Column(String)
     fetch_interval = Column(Integer) # Tính bằng phút
     data_mapping = Column(String) # Ví dụ: $.current.temp_c
