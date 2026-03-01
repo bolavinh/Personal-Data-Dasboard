@@ -1,7 +1,7 @@
 # Personal Data Dashboard
 
-Một ứng dụng Dashboard cá nhân hóa giúp theo dõi giá vàng, tỷ giá ngoại tệ, thời tiết và các API tùy chỉnh trong một giao diện duy nhất. Hỗ trợ kéo thả Widget và hệ thống cảnh báo qua Gmail.
-
+Một ứng dụng Dashboard cá nhân hóa giúp theo dõi giá vàng, tỷ giá ngoại tệ, thời tiết và cho phép tích hợp các API tùy chỉnh trong một giao diện duy nhất. Hỗ trợ kéo thả Widget và hệ thống cảnh báo qua Gmail.
+![alt text](./image/image1.png)
 ## **Tính năng chính**
 - Widget Dashboard: Theo dõi dữ liệu thực tế (Vàng, USD, Thời tiết...).
 
@@ -28,7 +28,11 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install fastapi uvicorn sqlalchemy apscheduler requests jsonpath-ng python-dotenv
 
 # Cấu hình môi trường
-# Tạo file .env và điền thông tin Gmail của bạn (app password, 
+# Tạo file ".env" và điền thông tin Gmail của bạn
+
+GMAIL_SENDER=your_gmail@gmail.com
+GMAIL_APP_PASSWORD=your_app_password
+RECEIVER_EMAIL=your_received_email@gmail.com
 
 # Chạy Server
 uvicorn main:app --reload
@@ -43,15 +47,17 @@ cd dashboard-frontend
 npm install
 
 # Các thư viện chính đã sử dụng:
-# npm install react-grid-layout recharts lucide-react axios tailwindcss
+npm install react-grid-layout recharts lucide-react axios tailwindcss openmeteo
 
 # Chạy ứng dụng
 npm run dev
+#Web hoạt động ở http://localhost:5173/
 ```
 
 ## **3. Hướng dẫn sử dụng**
+### **Thêm Widget**
+![alt text](./image/image.png)
 - Thêm các API bằng nút **[Thêm Widget (API)]**
-![alt text](/image/image.png)
 - Điền thông tin bao gồm
     - Tên Widget(VD: Giá vàng, nhiệt độ, giá xăng)
     - Danh mục (VD: Tài chính,...)
@@ -60,3 +66,10 @@ npm run dev
     - Chu kỳ(Phút): Chu kỳ backend fetch dữ liệu 
 -  Nút **[Test API]** để fetch thử dữ liệu từ API được cung cấp xem đã đúng chưa
 - **Lưu Widget** và widget mới có thể kéo thả, mở rộng trên dashboard
+
+### **Thêm trigger thông báo(gửi thông báo qua gmail)**
+![alt text](./image/image2.png)
+- Cài đặt trigger bằng toán tử so sánh(lớn hơn, nhỏ hơn, bằng)
+- Set giá trị trigger(số)
+- Set tier thông báo (thông báo - cảnh báo - khẩn cấp)
+![alt text](./image/image3.png)
