@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Responsive, WidthProvider } from "react-grid-layout/legacy";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import { getWidgets, updateWidgetLayout } from './services/api';
-import WidgetCard from './components/WidgetCard';
+import { getWidgets } from './services/api';
 import { Plus } from 'lucide-react';
 import AddWidgetModal from './components/AddWidgetModal'; // Import Modal
 
+import GenericWidget from './components/GenericWidget';
+import WeatherWidget from './components/widgets/WeatherWidget';
+import AqiWidget from './components/widgets/AqiWidget';
+import GoldWidget from './components/widgets/GoldWidget';
+import ForexWidget from './components/widgets/ForexWidget';
+
+// console.log("Widgets:", widgets);
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -25,13 +31,14 @@ const Dashboard = () => {
       const res = await getWidgets();
       const fetchedWidgets = res.data;
       setWidgets(fetchedWidgets);
-      
+      console.log("Fetched widgets:", fetchedWidgets);
       // Khôi phục layout từ DB
       const loadedLayout = fetchedWidgets.map(w => ({
         i: w.id.toString(),
-        ...(w.layout ? w.layout : { x: 0, y: Infinity, w: 2, h: 2 }) // Default nếu chưa có layout
+        ...(w.layout ? w.layout : { x: 0, y: Infinity, w: 4, h: 3 }) // Default nếu chưa có layout
       }));
       setLayout(loadedLayout);
+
     } catch (error) {
       console.error("Lỗi lấy dữ liệu dashboard:", error);
     }
@@ -45,6 +52,28 @@ const Dashboard = () => {
       layout: { x: item.x, y: item.y, w: item.w, h: item.h }
     }));
     // await updateWidgetLayout(layoutUpdates); // Mở comment khi đã làm API PUT ở backend
+  };
+
+  const renderWidget = (widget) => {
+    const type =
+      widget.widget_type ||
+      (widget.name.includes("Thời tiết") && "weather") ||
+      (widget.name.includes("AQI") && "aqi");
+
+
+    switch (type) {
+      case 'weather':
+        return <WeatherWidget widget={widget} />;
+      case 'aqi':
+        return <AqiWidget widget={widget} />;
+      case 'gold':
+        return <GoldWidget widget={widget} onDeleteSuccess={fetchData} />;
+      case 'forex':
+        return <ForexWidget widget={widget} onDeleteSuccess={fetchData} />;
+      default:
+        // 'custom' - Các Widget người dùng tự thêm
+        return <GenericWidget widget={widget} onDeleteSuccess={fetchData} />;
+    }
   };
 
   return (
@@ -70,7 +99,7 @@ const Dashboard = () => {
         >
           {widgets.map((widget) => (
             <div key={widget.id.toString()} className="cursor-grab active:cursor-grabbing">
-              <WidgetCard widget={widget} onDeleteSuccess={fetchData} />
+              {renderWidget(widget)}
             </div>
           ))}
         </ResponsiveGridLayout>

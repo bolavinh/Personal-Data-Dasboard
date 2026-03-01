@@ -62,12 +62,12 @@ const AddWidgetModal = ({ isOpen, onClose, onSaveSuccess }) => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Tên Widget (VD: Giá Vàng)</label>
-                <input required type="text" className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" 
+                <input required type="text" className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" 
                   value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Danh mục</label>
-                <select className="w-full p-2 border border-gray-300 rounded-lg outline-none"
+                <select className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                   value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
                   <option value="Finance">Tài chính (Vàng, Xăng, Ngoại tệ)</option>
                   <option value="Weather">Thời tiết & Môi trường</option>
@@ -78,19 +78,19 @@ const AddWidgetModal = ({ isOpen, onClose, onSaveSuccess }) => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Resource URL (API)</label>
-              <input required type="url" placeholder="https://api.example.com/data" className="w-full p-2 border border-gray-300 rounded-lg outline-none"
+              <input required type="url" placeholder="https://api.example.com/data" className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                 value={formData.api_url} onChange={e => setFormData({...formData, api_url: e.target.value})} />
             </div>
 
             <div className="grid grid-cols-3 gap-4">
               <div className="col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Data Mapping (JSONPath)</label>
-                <input required type="text" placeholder="$.data.current_price" className="w-full p-2 border border-gray-300 rounded-lg outline-none"
+                <input required type="text" placeholder="$.data.current_price" className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                   value={formData.data_mapping} onChange={e => setFormData({...formData, data_mapping: e.target.value})} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Chu kỳ (Phút)</label>
-                <input required type="number" min="1" className="w-full p-2 border border-gray-300 rounded-lg outline-none"
+                <input required type="number" min="1" className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                   value={formData.fetch_interval} onChange={e => setFormData({...formData, fetch_interval: parseInt(e.target.value)})} />
               </div>
             </div>
