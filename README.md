@@ -72,4 +72,5 @@ npm run dev
 - Cài đặt trigger bằng toán tử so sánh(lớn hơn, nhỏ hơn, bằng)
 - Set giá trị trigger(số)
 - Set tier thông báo (thông báo - cảnh báo - khẩn cấp)
+
 ![alt text](./image/image3.png)
